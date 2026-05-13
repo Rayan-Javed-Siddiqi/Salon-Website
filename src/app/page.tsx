@@ -174,7 +174,7 @@ export default function Home() {
               </div>
               
               <div className="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden mt-8 hover-premium-glow hover-premium-box-glow cursor-pointer">
-                <img alt="Precision Cut" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="/images/Screenshot%202026-05-09%20021353.png" />
+                <img alt="Precision Cut" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="/images/pic2.png" />
               </div>
               <div className="flex justify-between items-baseline">
                 <span className="font-label-caps text-[10px] text-on-tertiary-container">STUDY 04: TEXTURE</span>
