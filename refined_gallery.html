@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&amp;family=Hanken+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-overhang {
+            margin-right: -80px;
+        }
+        .copper-etch {
+            border: 1px solid rgba(184, 115, 51, 0.2);
+        }
+        .text-shadow-sm {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "inverse-primary": "#5f5e5e",
+                      "surface-dim": "#131411",
+                      "tertiary-container": "#2c1400",
+                      "background": "#131411",
+                      "surface-container-lowest": "#0e0e0c",
+                      "primary-container": "#1a1a1a",
+                      "secondary-container": "#931301",
+                      "tertiary-fixed-dim": "#ffb77b",
+                      "on-tertiary-fixed-variant": "#6d3a00",
+                      "on-secondary-container": "#ff9f8d",
+                      "surface-container": "#1f201d",
+                      "on-secondary-fixed-variant": "#8f1000",
+                      "surface": "#131411",
+                      "surface-tint": "#c8c6c5",
+                      "surface-variant": "#343532",
+                      "surface-bright": "#393936",
+                      "on-primary-container": "#848282",
+                      "primary-fixed": "#e5e2e1",
+                      "error": "#ffb4ab",
+                      "outline": "#8e9192",
+                      "surface-container-high": "#2a2a27",
+                      "secondary": "#ffb4a6",
+                      "on-primary": "#313030",
+                      "on-tertiary": "#4d2700",
+                      "tertiary-fixed": "#ffdcc2",
+                      "on-surface": "#e4e2dd",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "secondary-fixed": "#ffdad3",
+                      "primary": "#c8c6c5",
+                      "on-primary-fixed-variant": "#474746",
+                      "on-secondary": "#660800",
+                      "on-surface-variant": "#c4c7c7",
+                      "outline-variant": "#444748",
+                      "tertiary": "#ffb77b",
+                      "surface-container-low": "#1b1c19",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-container": "#b87333",
+                      "on-secondary-fixed": "#3f0300",
+                      "on-background": "#e4e2dd",
+                      "inverse-on-surface": "#30312e",
+                      "on-primary-fixed": "#1c1b1b",
+                      "inverse-surface": "#e4e2dd",
+                      "error-container": "#93000a",
+                      "on-tertiary-fixed": "#2e1500",
+                      "surface-container-highest": "#343532",
+                      "secondary-fixed-dim": "#ffb4a6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "24px",
+                      "unit": "8px",
+                      "margin-desktop": "80px",
+                      "section-gap": "120px",
+                      "gutter": "32px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Hanken Grotesk"],
+                      "utility": ["Hanken Grotesk"],
+                      "display-lg": ["Abril Fatface"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "headline-lg-mobile": ["Abril Fatface"],
+                      "headline-md": ["Abril Fatface"],
+                      "headline-lg": ["Abril Fatface"],
+                      "body-md": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "utility": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "display-lg": ["84px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["36px", {"lineHeight": "42px", "fontWeight": "400"}],
+                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                      "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-on-tertiary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-tertiary/20">
+<div class="flex justify-between items-center px-80 py-6 w-full max-w-[1440px] mx-auto">
+<div class="font-display-lg text-headline-lg tracking-tighter text-on-background">GLOBAL</div>
+<div class="hidden md:flex gap-10">
+<a class="text-primary font-bold border-b border-primary pb-1 font-label-caps text-label-caps" href="#">Heritage</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-colors duration-300" href="#">Services</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-colors duration-300" href="#">Lookbook</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-colors duration-300" href="#">Contact</a>
+</div>
+<button class="bg-[#D3432B] text-[#F9F7F2] font-label-caps text-label-caps px-8 py-3 hover:opacity-80 transition-all duration-400 active:scale-95">
+            Book Now
+        </button>
+</div>
+</nav>
+<main>
+<!-- Section 1: HERO -->
+<section class="relative h-screen w-full flex items-center px-80 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="A master barber at work" class="w-full h-full object-cover brightness-[0.4]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANtEySCtCP_0Lnh3Hy_nm5Qx55txYtR2Gt2hXVxPgqoFPlMLCar4bpLczmDdMsK_wk5XOlXTfvcvaPFSH2efmaU04vymJwZ5C4MU-IQUWR5eYTegvdn0TIRD8jgfq3immhY5Ub-GmCbZCYLYVlAsEofZQnzkQWvnDUyAzV0MEZtkE-AWK5AVB3aZ8ucr3lZlJPoIXzFMCRFlec2bKaA6AZWX9l0fX2NuwB_7O_xOIuQZT6XH3ZE0lSDrISGxevygrvSYmt3JHNkOw"/>
+</div>
+<div class="relative z-10 max-w-4xl">
+<h1 class="font-display-lg text-[100px] leading-[1] text-on-surface text-shadow-sm mb-6">
+                Sharp Cuts.<br/>Clean Looks.<br/>No Waiting.
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md tracking-wide">
+                Elevating the grooming narrative through precision craft and timeless tradition in the heart of Islamabad.
+            </p>
+<div class="mt-12 flex items-center gap-6">
+<span class="w-12 h-[1px] bg-on-tertiary-container"></span>
+<span class="font-label-caps text-label-caps text-on-tertiary-container">ESTABLISHED 2024</span>
+</div>
+</div>
+<div class="absolute bottom-12 right-80 flex gap-4 items-center">
+<div class="text-right">
+<p class="font-label-caps text-[10px] text-tertiary-fixed-dim">SCROLL TO EXPLORE</p>
+<div class="w-full h-10 mt-2 flex justify-end">
+<div class="w-[1px] h-full bg-tertiary-fixed-dim/30"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: THE LOOKBOOK (Restructured) -->
+<section class="py-section-gap px-80 bg-surface-container-lowest">
+<div class="grid grid-cols-12 gap-gutter items-end mb-20">
+<div class="col-span-6">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-4">GALLERY NO. 01</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">The Lookbook</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg">
+                    Authentic snapshots of our daily craft. Each session is an intentional study in texture, shape, and masculine refinement.
+                </p>
+</div>
+<div class="col-span-6 flex justify-end items-center pb-4">
+<div class="flex items-center gap-2 text-on-tertiary-container">
+<span class="font-label-caps text-[10px]">CURRENT ARCHIVE</span>
+<span class="w-8 h-[1px] bg-on-tertiary-container/30"></span>
+<span class="font-label-caps text-[10px]">VOL. 24.1</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-12">
+<!-- Row 1 -->
+<div class="col-span-6 flex flex-col gap-6">
+<div class="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden">
+<img alt="Haircut Detail 1" class="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0uhKy4tL8j0DxS6Mw11mt88vCP3QBWVHS-7PLgp299-Z7o9-41eRMQCvHy8yUPSM-yowSh9NlpGTDoekK8V7HKHUaDgwLViATtrFb88qwY8j83qzGOQOWnqjt1cdyzYkc8buB3dHMa375cMSXu9XIrL0jwskEQ2w9QzV_BSonlDxWSI1X46qIdvt7iEV1dm4FhNLnYdQTSGmGFCiPE7k1HDCHcIy9Vn6U9QChc4JA8-0fccWQxph2jKXkWPAxrQwqqadjeoPMzVo-Q"/>
+</div>
+<div class="flex justify-between items-baseline">
+<span class="font-label-caps text-[10px] text-on-tertiary-container">STUDY 01: MID FADE REFINEMENT</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
+</div>
+</div>
+<div class="col-span-6 flex flex-col gap-6 mt-16">
+<div class="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden">
+<img alt="Shop Atmosphere" class="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0uiGtfZJwrTK4-hx8M1SWjHsU3gnE3-OXp8kLJqOVUf39zCaPQXPe3jt4MPDclhNUxQyiMWfUKXnzDA8Zy2ZA571mrKQIgX-Bptv3TU6LgIUh41jMX47sXgKPIhPkpOPbG_rJ06O9H5jFBEDsW4gtCykzfY6v-GEh9deDlnkQkT998-pymnCvG49HSMkS6JPf-2fkaEyH4ngjFqwJXZsPNGd-GTI23MDDEsnNsVSrhqLB2V3l1cvHlzv9UOEcx__skj4-QiUP4hKeg"/>
+</div>
+<div class="flex justify-between items-baseline">
+<span class="font-label-caps text-[10px] text-on-tertiary-container">STUDY 02: THE STUDIO FLOOR</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="col-span-6 flex flex-col gap-6 -mt-8">
+<div class="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden">
+<img alt="Beard Detail" class="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0uhVHXYibebN2K8CieO7vdYSEO7rE5zSc3A5hR4x6V0A4uYKF9cP7V8Ix0iGQXc_kruJJZuClEUQi1oLy_OSB8bMsH-OLN55ut7xXE2fR1BoHmnZfHgBt1QxSMsfJkzjv8K6xdwZ6jsMXiPLDqOOcPjPg2EOMkpNWp7TzTr6DOPX49ah2EHZbcq9AWcRVXBYCAzmUwgdaCPBMI_zHQA1VZ5hL3GsFJUAaHcLVPn1JyOuCA980nQd2rEuRIMIDHnWfwF0ZBvKcXKM7g"/>
+</div>
+<div class="flex justify-between items-baseline">
+<span class="font-label-caps text-[10px] text-on-tertiary-container">STUDY 03: TAPERED PROFILE</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
+</div>
+</div>
+<div class="col-span-6 flex flex-col gap-6 mt-8">
+<div class="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden">
+<img alt="Precision Cut" class="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0ugJ9kYqO89tUUCaNpNtluJy-iz29fyRUfT9V7FGT8ISaLiLR9bl7NvpWZOwCHHI07dwA6Yp4oQjQWs7HZEg43YqgOTy2NijVvCURK9H_oeAoiOnzoGZd0SAxy1Wn3SDeJ90HU07mZxkmcVPFHA8ktue1XEmaNhqEHUa6hH9VNIMURZnAWmsR0uE6bMgNYQUjEwixlYxIGTNJd0EuNuPvAS0y4EiX7dnoIIUwIlse8nN3ArXh1ej6rOPBye1xbua2Kzv5pv1ZYmlvA"/>
+</div>
+<div class="flex justify-between items-baseline">
+<span class="font-label-caps text-[10px] text-on-tertiary-container">STUDY 04: TEXTURE ANALYSIS</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: SERVICES -->
+<section class="py-section-gap px-80 bg-background relative overflow-hidden">
+<div class="absolute right-0 top-0 text-[20vw] font-display-lg text-white/5 select-none leading-none -translate-y-1/4">CRAFT</div>
+<div class="grid grid-cols-12 gap-gutter mb-20 relative z-10">
+<div class="col-span-12">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-4 underline decoration-on-tertiary-container/30 underline-offset-8">THE MENU</span>
+</div>
+</div>
+<div class="space-y-0 relative z-10">
+<!-- Haircut -->
+<div class="group py-12 border-b border-tertiary/20 flex justify-between items-end hover:bg-surface-container-low transition-all duration-500 px-4">
+<div class="max-w-xl">
+<h3 class="font-headline-md text-[48px] text-on-surface group-hover:translate-x-4 transition-transform duration-500">Haircut</h3>
+<p class="font-body-md text-on-surface-variant mt-2 group-hover:translate-x-4 transition-transform duration-500 delay-75">Tailored precision cut including consultation and hot towel finish.</p>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-1">30 MIN</span>
+<span class="font-display-lg text-headline-lg text-on-surface">$45</span>
+</div>
+</div>
+<!-- Beard Trim -->
+<div class="group py-12 border-b border-tertiary/20 flex justify-between items-end hover:bg-surface-container-low transition-all duration-500 px-4">
+<div class="max-w-xl">
+<h3 class="font-headline-md text-[48px] text-on-surface group-hover:translate-x-4 transition-transform duration-500">Beard Trim</h3>
+<p class="font-body-md text-on-surface-variant mt-2 group-hover:translate-x-4 transition-transform duration-500 delay-75">Sculpting and conditioning for the modern beard. Straight razor edging.</p>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-1">20 MIN</span>
+<span class="font-display-lg text-headline-lg text-on-surface">$30</span>
+</div>
+</div>
+<!-- Haircut + Beard -->
+<div class="group py-12 border-b border-tertiary/20 flex justify-between items-end hover:bg-surface-container-low transition-all duration-500 px-4">
+<div class="max-w-xl">
+<h3 class="font-headline-md text-[48px] text-on-surface group-hover:translate-x-4 transition-transform duration-500">Haircut + Beard</h3>
+<p class="font-body-md text-on-surface-variant mt-2 group-hover:translate-x-4 transition-transform duration-500 delay-75">The complete grooming experience. Full service reconstruction.</p>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-1">45 MIN</span>
+<span class="font-display-lg text-headline-lg text-on-surface">$70</span>
+</div>
+</div>
+<!-- Facial / Cleanup -->
+<div class="group py-12 border-b border-tertiary/20 flex justify-between items-end hover:bg-surface-container-low transition-all duration-500 px-4">
+<div class="max-w-xl">
+<h3 class="font-headline-md text-[48px] text-on-surface group-hover:translate-x-4 transition-transform duration-500">Facial / Cleanup</h3>
+<p class="font-body-md text-on-surface-variant mt-2 group-hover:translate-x-4 transition-transform duration-500 delay-75">Charcoal scrub, steam treatment, and moisturizing massage.</p>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-1">40 MIN</span>
+<span class="font-display-lg text-headline-lg text-on-surface">$50</span>
+</div>
+</div>
+<!-- Hair Coloring -->
+<div class="group py-12 border-b border-tertiary/20 flex justify-between items-end hover:bg-surface-container-low transition-all duration-500 px-4">
+<div class="max-w-xl">
+<h3 class="font-headline-md text-[48px] text-on-surface group-hover:translate-x-4 transition-transform duration-500">Hair Coloring</h3>
+<p class="font-body-md text-on-surface-variant mt-2 group-hover:translate-x-4 transition-transform duration-500 delay-75">Professional grey blending or full color transformation.</p>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-1">75 MIN</span>
+<span class="font-display-lg text-headline-lg text-on-surface">$95</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: TESTIMONIALS -->
+<section class="py-section-gap px-80 bg-background border-t border-tertiary/10">
+<div class="mb-20">
+<span class="font-label-caps text-label-caps text-on-tertiary-container block mb-4">TESTIMONIALS</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Reviews</h2>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-6 space-y-6">
+<p class="font-body-lg text-[24px] leading-relaxed text-on-surface italic">"The staff is very good specially their behaviour and safder bhai is very competent a do their work with dedication"</p>
+<div class="flex items-center gap-4">
+<span class="w-8 h-[1px] bg-on-tertiary-container"></span>
+<p class="font-label-caps text-label-caps text-on-tertiary-container uppercase tracking-widest">Qasim Masood</p>
+</div>
+</div>
+<div class="col-span-6 space-y-6 border-l border-tertiary/10 pl-12">
+<p class="font-body-lg text-[24px] leading-relaxed text-on-surface italic">"I had an amazing experience with global's staff and there service as well higenic and friendly environment awesome service and with the will of God I'll become there regular customer..."</p>
+<div class="flex items-center gap-4">
+<span class="w-8 h-[1px] bg-on-tertiary-container"></span>
+<p class="font-label-caps text-label-caps text-on-tertiary-container uppercase tracking-widest">Sajjad Ullah</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: BOOKING -->
+<section class="py-section-gap px-80 bg-surface-container-lowest">
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-4">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">Claim Your Slot</h2>
+<p class="font-body-md text-on-surface-variant mb-12 pr-10">
+                    Select a time that suits your narrative. We prioritize quality over quantity, ensuring every slot is a dedicated experience.
+                </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-on-tertiary-container">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-caps text-label-caps">OCTOBER 24, 2024</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-label-caps text-label-caps">I-8/4 ISLAMABAD</span>
+</div>
+</div>
+</div>
+<div class="col-span-8">
+<div class="grid grid-cols-4 gap-4">
+<!-- Time Slots -->
+<button class="bg-primary-container copper-etch p-6 text-center hover:bg-on-tertiary-container/20 transition-all group">
+<span class="font-display-lg text-headline-md text-on-surface block group-hover:text-tertiary transition-colors">10:00</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">AVAILABLE</span>
+</button>
+<button class="bg-on-tertiary-container copper-etch p-6 text-center transition-all group">
+<span class="font-display-lg text-headline-md text-white block">11:30</span>
+<span class="font-label-caps text-[10px] text-white/70">SELECTED</span>
+</button>
+<button class="bg-primary-container opacity-30 border border-tertiary/10 p-6 text-center cursor-not-allowed">
+<span class="font-display-lg text-headline-md text-on-surface-variant block">12:30</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">BOOKED</span>
+</button>
+<button class="bg-primary-container copper-etch p-6 text-center hover:bg-on-tertiary-container/20 transition-all group">
+<span class="font-display-lg text-headline-md text-on-surface block group-hover:text-tertiary transition-colors">14:00</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">AVAILABLE</span>
+</button>
+<button class="bg-primary-container copper-etch p-6 text-center hover:bg-on-tertiary-container/20 transition-all group">
+<span class="font-display-lg text-headline-md text-on-surface block group-hover:text-tertiary transition-colors">15:30</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">AVAILABLE</span>
+</button>
+<button class="bg-primary-container copper-etch p-6 text-center hover:bg-on-tertiary-container/20 transition-all group">
+<span class="font-display-lg text-headline-md text-on-surface block group-hover:text-tertiary transition-colors">17:00</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">AVAILABLE</span>
+</button>
+<button class="bg-primary-container copper-etch p-6 text-center hover:bg-on-tertiary-container/20 transition-all group">
+<span class="font-display-lg text-headline-md text-on-surface block group-hover:text-tertiary transition-colors">18:30</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">AVAILABLE</span>
+</button>
+<button class="bg-primary-container copper-etch p-6 text-center hover:bg-on-tertiary-container/20 transition-all group">
+<span class="font-display-lg text-headline-md text-on-surface block group-hover:text-tertiary transition-colors">20:00</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">AVAILABLE</span>
+</button>
+</div>
+<div class="mt-8">
+<button class="w-full bg-[#D3432B] text-[#F9F7F2] font-label-caps text-label-caps py-6 tracking-widest hover:brightness-110 transition-all active:scale-[0.98]">
+                        CONFIRM BOOKING FOR 11:30 AM
+                    </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap bg-surface-container-lowest border-t border-tertiary/10">
+<div class="grid grid-cols-12 px-80 gap-gutter items-start max-w-[1440px] mx-auto">
+<div class="col-span-4">
+<div class="font-display-lg text-headline-md text-on-surface mb-4">GLOBAL</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs">The craft of grooming as a storied tradition. Serving the discerning gentleman since 2024.</p>
+</div>
+<div class="col-span-4 flex flex-col gap-4 pt-4">
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-tertiary transition-colors" href="#">Instagram</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-tertiary transition-colors" href="#">Privacy</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-tertiary transition-colors" href="#">Terms</a>
+</div>
+<div class="col-span-4 text-right pt-4">
+<p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 GLOBAL HAIR SALOON. ISLAMABAD.</p>
+<div class="mt-8 flex justify-end gap-6 items-center">
+<div class="w-10 h-10 border border-tertiary/20 flex items-center justify-center hover:border-tertiary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">north</span>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- Fixed Booking Indicator -->
+<div class="fixed bottom-10 right-10 z-40 md:hidden">
+<button class="bg-[#D3432B] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl active:scale-90 transition-all">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+</div>
+</body></html>

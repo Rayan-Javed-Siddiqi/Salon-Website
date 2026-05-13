@@ -2,26 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.on-background');
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .copper-etch {
+    border: 1px solid rgba(184, 115, 51, 0.2);
+  }
+  .text-shadow-sm {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .editorial-overhang {
+    margin-right: -80px;
+  }
+  
+  /* Premium Hover Effect */
+  .hover-premium-glow {
+    transition: transform 500ms ease-in-out, text-shadow 500ms ease-in-out, box-shadow 500ms ease-in-out;
+  }
+  .hover-premium-glow:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Specifically for text */
+  .hover-premium-text-glow:hover {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.4), 0 0 20px rgba(184, 115, 51, 0.2);
+  }
+
+  /* Specifically for buttons/containers */
+  .hover-premium-box-glow:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), 0 0 30px rgba(184, 115, 51, 0.15);
   }
 }
