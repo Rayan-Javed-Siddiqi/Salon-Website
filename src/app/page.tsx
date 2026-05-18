@@ -457,7 +457,7 @@ export default function Home() {
                       </div>
                       <div>
                         <label className="font-label-caps text-primary block mb-2">YOUR PHONE</label>
-                        <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+92 3XX XXXXXXX" className="w-full bg-[#1A140C] border border-primary/30 p-4 font-body-md outline-none focus:border-primary transition-colors" />
+                        <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+92 3XX XXXXXXX" minLength={10} maxLength={15} pattern="^\+?[0-9\s\-]{10,15}$" title="Please enter a valid phone number (10-15 digits)" className="w-full bg-[#1A140C] border border-primary/30 p-4 font-body-md outline-none focus:border-primary transition-colors" />
                       </div>
                     </div>
                   )}

@@ -44,7 +44,7 @@ export default function AdminPage() {
       setLoggedIn(true);
       setError("");
     } else {
-      setError("Galat password. Dobara koshish karein.");
+      setError("Incorrect password. Please try again.");
     }
   };
 
@@ -107,10 +107,10 @@ export default function AdminPage() {
       {data && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
-            { label: "Aaj Ki Bookings", value: data.todayBookings },
-            { label: "Is Hafte Ki Bookings", value: data.weekBookings },
-            { label: "Is Hafte Ki Kamai", value: `Rs. ${data.weekRevenue}` },
-            { label: "Kul Grahak", value: data.totalClients },
+            { label: "Today's Bookings", value: data.todayBookings },
+            { label: "This Week's Bookings", value: data.weekBookings },
+            { label: "This Week's Revenue", value: `Rs. ${data.weekRevenue}` },
+            { label: "Total Clients", value: data.totalClients },
           ].map((s) => (
             <div key={s.label} className="border border-[#B8934A]/20 p-6 bg-[#1A140C]">
               <p className="text-[9px] tracking-[0.2em] text-[#B8934A] uppercase mb-2" style={{ fontFamily: "var(--font-space)" }}>{s.label}</p>
