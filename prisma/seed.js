@@ -2,6 +2,12 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
+  const count = await prisma.services.count();
+  if (count > 0) {
+    console.log('Services already seeded. Skipping.');
+    return;
+  }
+
   const services = [
     { serviceName: 'Haircut', durationMinutes: 30, price: 50 },
     { serviceName: 'Beard Trim', durationMinutes: 20, price: 30 },
