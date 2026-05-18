@@ -262,18 +262,16 @@ export default function Home() {
               <span className="font-label-caps text-primary mb-2 block">GALLERY NO. 01</span>
               <h2 className="font-headline-xl uppercase text-[48px] md:text-[64px]">Our Work.</h2>
             </div>
-            
-            <div className="flex gap-4 mt-6 md:mt-0">
-              <button onClick={() => scrollSlider('left')} className="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-background transition-all" aria-label="Scroll left">
-                <span className="material-symbols-outlined">arrow_back</span>
-              </button>
-              <button onClick={() => scrollSlider('right')} className="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-background transition-all" aria-label="Scroll right">
-                <span className="material-symbols-outlined">arrow_forward</span>
-              </button>
-            </div>
           </div>
           
-          <div ref={sliderRef} className="flex overflow-x-auto gap-4 md:gap-6 pb-12 snap-x snap-mandatory px-gutter [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
+          <div className="relative group/slider">
+            <button onClick={() => scrollSlider('left')} className="absolute left-2 md:left-8 top-[calc(50%-24px)] -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary bg-[#0D0B09]/80 backdrop-blur-sm hover:bg-primary hover:text-background transition-all opacity-0 group-hover/slider:opacity-100 disabled:opacity-0" aria-label="Scroll left">
+              <span className="material-symbols-outlined">arrow_back</span>
+            </button>
+            <button onClick={() => scrollSlider('right')} className="absolute right-2 md:right-8 top-[calc(50%-24px)] -translate-y-1/2 z-20 w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary bg-[#0D0B09]/80 backdrop-blur-sm hover:bg-primary hover:text-background transition-all opacity-0 group-hover/slider:opacity-100 disabled:opacity-0" aria-label="Scroll right">
+              <span className="material-symbols-outlined">arrow_forward</span>
+            </button>
+            <div ref={sliderRef} className="flex overflow-x-auto gap-4 md:gap-6 pb-12 snap-x snap-mandatory px-gutter [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
             {[
               "Screenshot%202026-05-18%20184151.png",
               "Screenshot%202026-05-18%20184204.png",
@@ -296,6 +294,7 @@ export default function Home() {
                 />
               </div>
             ))}
+          </div>
           </div>
         </section>
         <div className="copper-divider"></div>
