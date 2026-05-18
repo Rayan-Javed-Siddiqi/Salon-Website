@@ -370,7 +370,7 @@ export default function Home() {
                   <span className="material-symbols-outlined text-primary">call</span>
                   <div className="font-body-md">
                     <span className="font-label-caps text-[10px] text-primary/60 block mb-1">CONTACT</span>
-                    <a href="tel:+923000000000" className="text-primary hover:underline">{/* TODO: replace with real number */}+92 300 000 0000</a>
+                    <a href="tel:+92512719405" className="text-primary hover:underline">+92 51 271 9405</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">

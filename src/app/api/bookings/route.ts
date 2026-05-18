@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export const dynamic = "force-dynamic";
+
 // Helper to add minutes to a time string (HH:MM)
 function addMinutes(timeStr: string, mins: number) {
   const [h, m] = timeStr.split(":").map(Number);
