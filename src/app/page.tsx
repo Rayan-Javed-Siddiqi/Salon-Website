@@ -334,17 +334,17 @@ export default function Home() {
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
             <div className="relative">
               <span className="font-label-caps text-[64px] text-primary/10 absolute -top-8 -left-4">“</span>
-              <blockquote className="font-body-lg text-[32px] italic leading-tight text-on-surface mb-8">
-                The attention to detail at GL◆BAL is unmatched in the city. It’s not just a haircut; it’s a quiet hour of pure craftsmanship in an environment that commands respect.
+              <blockquote className="font-body-lg text-[24px] md:text-[32px] italic leading-tight text-on-surface mb-8">
+                The staff is very good specially their behaviour and safder bhai is very competent a do their work with dedication
               </blockquote>
-              <cite className="font-label-caps text-primary not-italic tracking-widest">— AHMED KHAN</cite>
+              <cite className="font-label-caps text-primary not-italic tracking-widest">— QASIM MASOOD</cite>
             </div>
             <div className="relative">
               <span className="font-label-caps text-[64px] text-primary/10 absolute -top-8 -left-4">“</span>
-              <blockquote className="font-body-lg text-[32px] italic leading-tight text-on-surface mb-8">
-                The aesthetic alone is worth the visit. But the precision of the skin fade and the traditional hot towel service is what keeps me coming back every two weeks.
+              <blockquote className="font-body-lg text-[20px] md:text-[24px] italic leading-tight text-on-surface mb-8">
+                I had an amazing experience with global's staff and there service as well higenic and friendly environment awesome service and with the will of God I'll become there regular customer i suggest those who are reading my review must visit them if your are near to global
               </blockquote>
-              <cite className="font-label-caps text-primary not-italic tracking-widest">— ZAIN MALIK</cite>
+              <cite className="font-label-caps text-primary not-italic tracking-widest">— SAJJAD ULLAH</cite>
             </div>
           </div>
         </section>
