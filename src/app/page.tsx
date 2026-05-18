@@ -2,6 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 
+interface ServiceType {
+  id: number;
+  serviceName: string;
+  durationMinutes: number;
+  price: number;
+}
+
 export default function Home() {
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -12,8 +19,8 @@ export default function Home() {
     }
   };
 
-  const [services, setServices] = useState<any[]>([]);
-  const [selectedService, setSelectedService] = useState<any | null>(null);
+  const [services, setServices] = useState<ServiceType[]>([]);
+  const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [availableSlots, setAvailableSlots] = useState<{ time: string; booked: boolean }[]>([]);
   const [selectedTime, setSelectedTime] = useState<string>("");
@@ -104,7 +111,7 @@ export default function Home() {
     const serviceObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.querySelectorAll(".service-row-hidden").forEach((row: any, i) => {
+          entry.target.querySelectorAll(".service-row-hidden").forEach((row: Element, i) => {
             setTimeout(() => {
               row.classList.remove("service-row-hidden");
               row.classList.add("service-row-visible");
@@ -136,7 +143,7 @@ export default function Home() {
     };
   }, [services]);
 
-  const handleBookService = (service: any) => {
+  const handleBookService = (service: ServiceType) => {
     setSelectedService(service);
     const today = new Date().toISOString().split("T")[0];
     setSelectedDate(today);
@@ -208,7 +215,7 @@ export default function Home() {
           </div>
 
           <div className="relative z-10 flex flex-col items-center text-center px-gutter max-w-5xl mt-16">
-            <span className="font-label-caps text-primary mb-6 tracking-[0.4em] uppercase text-sm drop-shadow-md">— ISLAMABAD'S EDITORIAL BARBER STUDIO</span>
+            <span className="font-label-caps text-primary mb-6 tracking-[0.4em] uppercase text-sm drop-shadow-md">— ISLAMABAD&apos;S EDITORIAL BARBER STUDIO</span>
             <h1 className="font-display-lg text-[64px] md:text-[96px] lg:text-[130px] text-on-surface leading-[0.9] mb-8 drop-shadow-lg uppercase">
               <span className="block hero-word" style={{ transitionDelay: "0.05s" }}>SCULPTING</span>
               <span className="block hero-word text-primary" style={{ transitionDelay: "0.2s" }}>PROFILES.</span>
@@ -237,11 +244,11 @@ export default function Home() {
           <div className="animate-marquee flex gap-16 font-label-caps tracking-[0.4em] text-primary/40 text-[10px] md:text-xs">
             <span>SCULPTING PROFILES</span><span className="text-primary/20">◆</span>
             <span>ENGINEERED PRECISION</span><span className="text-primary/20">◆</span>
-            <span>THE GENTLEMEN'S SANCTUARY</span><span className="text-primary/20">◆</span>
+            <span>THE GENTLEMEN&apos;S SANCTUARY</span><span className="text-primary/20">◆</span>
             <span>RAW TEXTURE</span><span className="text-primary/20">◆</span>
             <span>SCULPTING PROFILES</span><span className="text-primary/20">◆</span>
             <span>ENGINEERED PRECISION</span><span className="text-primary/20">◆</span>
-            <span>THE GENTLEMEN'S SANCTUARY</span><span className="text-primary/20">◆</span>
+            <span>THE GENTLEMEN&apos;S SANCTUARY</span><span className="text-primary/20">◆</span>
             <span>RAW TEXTURE</span><span className="text-primary/20">◆</span>
             <span>SCULPTING PROFILES</span><span className="text-primary/20">◆</span>
             <span>ENGINEERED PRECISION</span><span className="text-primary/20">◆</span>
