@@ -1,12 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  const scrollSlider = (direction: "left" | "right") => {
+    if (sliderRef.current) {
+      const scrollAmount = window.innerWidth > 768 ? 400 : 250;
+      sliderRef.current.scrollBy({ left: direction === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
+    }
+  };
+
   const [services, setServices] = useState<any[]>([]);
   const [selectedService, setSelectedService] = useState<any | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const [availableSlots, setAvailableSlots] = useState<{time: string, booked: boolean}[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<{ time: string; booked: boolean }[]>([]);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -34,6 +43,99 @@ export default function Home() {
     }
   }, [selectedService, selectedDate]);
 
+  useEffect(() => {
+    const cursor = document.getElementById("custom-cursor");
+    const cursorRing = document.getElementById("custom-cursor-ring");
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (cursor && cursorRing) {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+        cursorRing.style.left = e.clientX + "px";
+        cursorRing.style.top = e.clientY + "px";
+      }
+    };
+
+    const handleMouseEnter = () => {
+      if (cursorRing) {
+        cursorRing.style.width = "36px";
+        cursorRing.style.height = "36px";
+        cursorRing.style.borderColor = "#E8E0D4";
+      }
+    };
+
+    const handleMouseLeave = () => {
+      if (cursorRing) {
+        cursorRing.style.width = "24px";
+        cursorRing.style.height = "24px";
+        cursorRing.style.borderColor = "#b8934a";
+      }
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    
+    // Add hover listeners to interactables dynamically or statically
+    const interactables = document.querySelectorAll("button, a, .group, select, input");
+    interactables.forEach((el) => {
+      el.addEventListener("mouseenter", handleMouseEnter);
+      el.addEventListener("mouseleave", handleMouseLeave);
+    });
+
+    // Hero animations
+    setTimeout(() => {
+      document.querySelectorAll(".hero-word").forEach((el) => el.classList.add("visible"));
+      setTimeout(() => {
+        document.querySelectorAll(".hero-sub-line").forEach((el) => el.classList.add("visible"));
+      }, 400);
+    }, 100);
+
+    // Scroll reveal observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+    // Service row stagger observer
+    const serviceObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll(".service-row-hidden").forEach((row: any, i) => {
+            setTimeout(() => {
+              row.classList.remove("service-row-hidden");
+              row.classList.add("service-row-visible");
+            }, i * 120);
+          });
+          serviceObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    const servicesSection = document.getElementById("services");
+    if (servicesSection) serviceObserver.observe(servicesSection);
+
+    // Parallax watermark
+    const handleScroll = () => {
+      const wm = document.querySelector(".watermark-text") as HTMLElement;
+      if (wm) {
+        wm.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
+      interactables.forEach((el) => {
+        el.removeEventListener("mouseenter", handleMouseEnter);
+        el.removeEventListener("mouseleave", handleMouseLeave);
+      });
+    };
+  }, [services]);
+
   const handleBookService = (service: any) => {
     setSelectedService(service);
     const today = new Date().toISOString().split("T")[0];
@@ -44,18 +146,11 @@ export default function Home() {
   const submitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone || !selectedService || !selectedDate || !selectedTime) return;
-
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          phone,
-          serviceId: selectedService.id,
-          date: selectedDate,
-          time: selectedTime,
-        }),
+        body: JSON.stringify({ name, phone, serviceId: selectedService.id, date: selectedDate, time: selectedTime }),
       });
       if (res.ok) {
         setBookingSuccess(true);
@@ -76,306 +171,291 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-on-tertiary-container selection:text-white min-h-screen">
-      {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-tertiary/20">
-        <div className="flex justify-between items-center px-6 md:px-20 lg:px-40 py-6 w-full max-w-[1440px] mx-auto">
-          <div className="font-display-lg text-headline-lg tracking-tighter text-on-background">GLOBAL</div>
-          <div className="hidden md:flex gap-10">
-            <a className="text-primary font-bold border-b border-primary pb-1 font-label-caps text-label-caps hover-premium-glow hover-premium-text-glow" href="#">Heritage</a>
-            <a className="text-on-surface-variant font-label-caps text-label-caps hover:text-primary hover-premium-glow hover-premium-text-glow" href="#services">Services</a>
-            <a className="text-on-surface-variant font-label-caps text-label-caps hover:text-primary hover-premium-glow hover-premium-text-glow" href="#gallery">Lookbook</a>
-            <a className="text-on-surface-variant font-label-caps text-label-caps hover:text-primary hover-premium-glow hover-premium-text-glow" href="#contact">Contact</a>
-          </div>
-          <button 
-            onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-[#D3432B] text-[#F9F7F2] font-label-caps text-label-caps px-8 py-3 hover-premium-glow hover-premium-box-glow"
-          >
-            Book Now
-          </button>
+    <div className="selection:bg-primary selection:text-background">
+      <svg className="film-grain">
+        <filter id="grain">
+          <feTurbulence baseFrequency="0.65" numOctaves={3} stitchTiles="stitch" type="fractalNoise" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect filter="url(#grain)" width="100%" height="100%" />
+      </svg>
+      <div id="custom-cursor"></div>
+      <div id="custom-cursor-ring"></div>
+
+      <header className="fixed top-0 w-full z-50 flex justify-between items-center px-gutter py-4 bg-surface/90 backdrop-blur-md border-b border-primary/15">
+        <div className="font-display-lg text-on-surface tracking-tighter uppercase text-[28px] tracking-[0.08em]">
+          GL<span className="text-primary">◆</span>BAL
         </div>
-      </nav>
+        <nav className="hidden md:flex gap-8">
+          <a className="text-on-surface-variant font-label-caps text-[9px] tracking-widest hover:text-primary transition-colors duration-300" href="#">HERITAGE</a>
+          <a className="text-on-surface-variant font-label-caps text-[9px] tracking-widest hover:text-primary transition-colors duration-300" href="#services">SERVICES</a>
+          <a className="text-on-surface-variant font-label-caps text-[9px] tracking-widest hover:text-primary transition-colors duration-300" href="#gallery">GALLERY</a>
+          <a className="text-on-surface-variant font-label-caps text-[9px] tracking-widest hover:text-primary transition-colors duration-300" href="#location">LOCATION</a>
+          <a className="text-on-surface-variant font-label-caps text-[9px] tracking-widest hover:text-primary transition-colors duration-300" href="#contact">CONTACT</a>
+        </nav>
+        <button onClick={() => document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" })} className="bg-secondary text-on-secondary rounded-none px-6 py-2 font-label-caps text-[10px] tracking-widest hover:opacity-80 transition-all duration-300">
+          BOOK NOW
+        </button>
+      </header>
 
       <main>
-        {/* Section 1: HERO */}
-        <section className="relative h-screen w-full flex items-center px-6 md:px-20 lg:px-40 overflow-hidden">
+        {/* HERO */}
+        <section className="h-screen relative flex items-center justify-center overflow-hidden">
+          {/* Background */}
           <div className="absolute inset-0 z-0">
-            <img alt="A master barber at work" className="w-full h-full object-cover brightness-[0.4]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANtEySCtCP_0Lnh3Hy_nm5Qx55txYtR2Gt2hXVxPgqoFPlMLCar4bpLczmDdMsK_wk5XOlXTfvcvaPFSH2efmaU04vymJwZ5C4MU-IQUWR5eYTegvdn0TIRD8jgfq3immhY5Ub-GmCbZCYLYVlAsEofZQnzkQWvnDUyAzV0MEZtkE-AWK5AVB3aZ8ucr3lZlJPoIXzFMCRFlec2bKaA6AZWX9l0fX2NuwB_7O_xOIuQZT6XH3ZE0lSDrISGxevygrvSYmt3JHNkOw" />
+            <img className="w-full h-full object-cover opacity-40 animate-slow-zoom" alt="Hero Background" src="/images/interior1.png" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0D0B09]/80 via-[#0D0B09]/50 to-[#0D0B09]"></div>
           </div>
-          <div className="relative z-10 max-w-4xl">
-            <h1 className="font-display-lg text-6xl md:text-[100px] leading-[1] text-on-surface text-shadow-sm mb-6 hover-premium-glow hover-premium-text-glow cursor-default">
-              Sharp Cuts.<br />Clean Looks.<br />No Waiting.
+
+          <div className="relative z-10 flex flex-col items-center text-center px-gutter max-w-5xl mt-16">
+            <span className="font-label-caps text-primary mb-6 tracking-[0.4em] uppercase text-sm drop-shadow-md">— ISLAMABAD'S EDITORIAL BARBER STUDIO</span>
+            <h1 className="font-display-lg text-[64px] md:text-[96px] lg:text-[130px] text-on-surface leading-[0.9] mb-8 drop-shadow-lg uppercase">
+              <span className="block hero-word" style={{ transitionDelay: "0.05s" }}>SCULPTING</span>
+              <span className="block hero-word text-primary" style={{ transitionDelay: "0.2s" }}>PROFILES.</span>
             </h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-md tracking-wide">
-              Elevating the grooming narrative through precision craft and timeless tradition in the heart of Islamabad.
+            <p className="font-body-lg text-on-surface-variant max-w-3xl mx-auto mb-12 hero-sub-line text-2xl md:text-4xl lg:text-5xl font-light italic">
+              Welcome to the new standard.
             </p>
-            <div className="mt-12 flex items-center gap-6">
-              <span className="w-12 h-[1px] bg-on-tertiary-container"></span>
-              <span className="font-label-caps text-label-caps text-on-tertiary-container">ESTABLISHED 2024</span>
-            </div>
-          </div>
-          <div className="hidden lg:flex absolute bottom-12 right-40 gap-4 items-center">
-            <div className="text-right">
-              <p className="font-label-caps text-[10px] text-tertiary-fixed-dim">SCROLL TO EXPLORE</p>
-              <div className="w-full h-10 mt-2 flex justify-end">
-                <div className="w-[1px] h-full bg-tertiary-fixed-dim/30"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 2: THE LOOKBOOK */}
-        <section id="gallery" className="py-20 md:py-32 px-6 md:px-20 lg:px-40 bg-surface-container-lowest">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-20">
-            <div className="col-span-1 lg:col-span-6">
-              <span className="font-label-caps text-label-caps text-on-tertiary-container block mb-4">GALLERY NO. 01</span>
-              <h2 className="font-headline-lg text-4xl md:text-headline-lg text-on-surface mb-8">The Lookbook</h2>
-              <p className="font-body-md text-body-md text-on-surface-variant max-w-lg">
-                Authentic snapshots of our daily craft. Each session is an intentional study in texture, shape, and masculine refinement.
-              </p>
-            </div>
-            <div className="hidden lg:flex col-span-6 justify-end items-center pb-4">
-              <div className="flex items-center gap-2 text-on-tertiary-container">
-                <span className="font-label-caps text-[10px]">CURRENT ARCHIVE</span>
-                <span className="w-8 h-[1px] bg-on-tertiary-container/30"></span>
-                <span className="font-label-caps text-[10px]">VOL. 24.1</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            {/* Column 1 */}
-            <div className="flex flex-col gap-6 md:-mt-8">
-              <div className="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden hover-premium-glow hover-premium-box-glow cursor-pointer">
-                <img alt="Haircut Detail 1" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="/images/pic1.png" />
-              </div>
-              <div className="flex justify-between items-baseline">
-                <span className="font-label-caps text-[10px] text-on-tertiary-container">STUDY 01: MID FADE</span>
-                <span className="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
-              </div>
-              
-              <div className="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden mt-8 hover-premium-glow hover-premium-box-glow cursor-pointer">
-                <img alt="Beard Detail" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="/images/pic2.png" />
-              </div>
-              <div className="flex justify-between items-baseline">
-                <span className="font-label-caps text-[10px] text-on-tertiary-container">STUDY 03: PROFILE</span>
-                <span className="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
-              </div>
-            </div>
-            
-            {/* Column 2 */}
-            <div className="flex flex-col gap-6 md:mt-16">
-              <div className="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden hover-premium-glow hover-premium-box-glow cursor-pointer">
-                <img alt="Shop Atmosphere" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="/images/pic3.png" />
-              </div>
-              <div className="flex justify-between items-baseline">
-                <span className="font-label-caps text-[10px] text-on-tertiary-container">STUDY 02: THE STUDIO</span>
-                <span className="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
-              </div>
-              
-              <div className="copper-etch p-1.5 aspect-[4/5] bg-surface-container overflow-hidden mt-8 hover-premium-glow hover-premium-box-glow cursor-pointer">
-                <img alt="Precision Cut" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105" src="/images/pic2.png" />
-              </div>
-              <div className="flex justify-between items-baseline">
-                <span className="font-label-caps text-[10px] text-on-tertiary-container">STUDY 04: TEXTURE</span>
-                <span className="font-label-caps text-[10px] text-on-surface-variant opacity-50">ISB. 24</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 3: SERVICES */}
-        <section id="services" className="py-20 md:py-32 px-6 md:px-20 lg:px-40 bg-background relative overflow-hidden">
-          <div className="hidden lg:block absolute right-0 top-0 text-[15vw] font-display-lg text-white/5 select-none leading-none -translate-y-1/4">CRAFT</div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 relative z-10">
-            <div className="col-span-12">
-              <span className="font-label-caps text-label-caps text-on-tertiary-container block mb-4 underline decoration-on-tertiary-container/30 underline-offset-8">THE MENU</span>
+            <div className="flex flex-col sm:flex-row gap-6 items-center hero-sub-line" style={{ transitionDelay: "0.5s" }}>
+              <button onClick={() => document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" })} className="bg-primary text-background px-12 py-4 font-label-caps tracking-widest text-xs hover:bg-white transition-colors duration-300">
+                BOOK APPOINTMENT
+              </button>
+              <a href="#services" className="text-on-surface hover:text-primary font-label-caps tracking-widest text-xs transition-colors duration-300 underline underline-offset-4 decoration-primary/30">
+                DISCOVER OUR SERVICES
+              </a>
             </div>
           </div>
           
-          <div className="space-y-0 relative z-10">
-            {services.map((service) => (
-              <div key={service.id} className="group py-12 border-b border-tertiary/20 flex flex-col md:flex-row justify-between items-start md:items-end hover:bg-surface-container-low transition-all duration-500 px-4">
-                <div className="max-w-xl mb-4 md:mb-0">
-                  <h3 className="font-headline-md text-3xl md:text-[48px] text-on-surface group-hover:translate-x-4 hover-premium-glow hover-premium-text-glow transition-transform duration-500">{service.serviceName}</h3>
-                  <p className="font-body-md text-on-surface-variant mt-2 group-hover:translate-x-4 transition-transform duration-500 delay-75">
-                    Premium styling tailored to your narrative.
-                  </p>
-                </div>
-                <div className="text-left md:text-right flex flex-col items-start md:items-end w-full md:w-auto">
-                  <span className="font-label-caps text-label-caps text-on-tertiary-container block mb-1">{service.durationMinutes} MIN</span>
-                  <div className="flex items-center gap-6">
-                    <span className="font-display-lg text-4xl md:text-headline-lg text-on-surface">Rs. {service.price}</span>
-                    <button 
-                      onClick={() => handleBookService(service)}
-                      className="border border-on-tertiary-container text-on-tertiary-container px-6 py-2 font-label-caps text-[10px] hover-premium-glow hover-premium-box-glow hover:bg-on-tertiary-container hover:text-white"
-                    >
-                      BOOK
-                    </button>
-                  </div>
-                </div>
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10 opacity-70">
+            <span className="font-label-caps text-[10px] tracking-[0.5em] text-primary/60 uppercase">Scroll</span>
+            <div className="w-px h-12 bg-gradient-to-b from-primary/60 to-transparent"></div>
+          </div>
+        </section>
+
+        {/* MARQUEE SEPARATOR */}
+        <div className="py-8 border-y border-primary/10 bg-[#120E0A] overflow-hidden flex whitespace-nowrap -mt-px relative z-20">
+          <div className="animate-marquee flex gap-16 font-label-caps tracking-[0.4em] text-primary/40 text-[10px] md:text-xs">
+            <span>SCULPTING PROFILES</span><span className="text-primary/20">◆</span>
+            <span>ENGINEERED PRECISION</span><span className="text-primary/20">◆</span>
+            <span>THE GENTLEMEN'S SANCTUARY</span><span className="text-primary/20">◆</span>
+            <span>RAW TEXTURE</span><span className="text-primary/20">◆</span>
+            <span>SCULPTING PROFILES</span><span className="text-primary/20">◆</span>
+            <span>ENGINEERED PRECISION</span><span className="text-primary/20">◆</span>
+            <span>THE GENTLEMEN'S SANCTUARY</span><span className="text-primary/20">◆</span>
+            <span>RAW TEXTURE</span><span className="text-primary/20">◆</span>
+            <span>SCULPTING PROFILES</span><span className="text-primary/20">◆</span>
+            <span>ENGINEERED PRECISION</span><span className="text-primary/20">◆</span>
+          </div>
+        </div>
+
+        {/* GALLERY */}
+        <section className="py-section-padding reveal overflow-hidden relative" id="gallery">
+          <div className="flex flex-col md:flex-row justify-between md:items-end mb-stack-lg border-b border-primary/20 pb-8 max-w-7xl mx-auto px-gutter">
+            <div>
+              <span className="font-label-caps text-primary mb-2 block">GALLERY NO. 01</span>
+              <h2 className="font-headline-xl uppercase text-[48px] md:text-[64px]">Our Work.</h2>
+            </div>
+            
+            <div className="flex gap-4 mt-6 md:mt-0">
+              <button onClick={() => scrollSlider('left')} className="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-background transition-all" aria-label="Scroll left">
+                <span className="material-symbols-outlined">arrow_back</span>
+              </button>
+              <button onClick={() => scrollSlider('right')} className="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-background transition-all" aria-label="Scroll right">
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+          
+          <div ref={sliderRef} className="flex overflow-x-auto gap-4 md:gap-6 pb-12 snap-x snap-mandatory px-gutter [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth">
+            {[
+              "Screenshot%202026-05-18%20184151.png",
+              "Screenshot%202026-05-18%20184204.png",
+              "Screenshot%202026-05-18%20184212.png",
+              "Screenshot%202026-05-18%20184158.png",
+              "Screenshot%202026-05-18%20184225.png",
+              "Screenshot%202026-05-18%20184232.png",
+              "Screenshot%202026-05-18%20184219.png",
+              "interior1.png",
+              "interior2.png",
+              "interior3.png",
+              "interior4.png"
+            ].map((imgSrc, idx) => (
+              <div key={idx} className="flex-none w-[65vw] md:w-[240px] lg:w-[260px] aspect-[4/5] snap-center rounded-xl overflow-hidden border border-primary/10 group bg-[#1C1510] relative">
+                <img 
+                  className="w-full h-full object-cover scale-[1.07] group-hover:scale-[1.12] transition-transform duration-700" 
+                  alt={`Our Work ${idx + 1}`} 
+                  src={`/images/${imgSrc}`} 
+                  loading="lazy"
+                />
               </div>
             ))}
           </div>
         </section>
+        <div className="copper-divider"></div>
 
-        {/* Section 4: TESTIMONIALS */}
-        <section className="py-20 md:py-32 px-6 md:px-20 lg:px-40 bg-background border-t border-tertiary/10">
-          <div className="mb-20">
-            <span className="font-label-caps text-label-caps text-on-tertiary-container block mb-4">TESTIMONIALS</span>
-            <h2 className="font-headline-lg text-4xl md:text-headline-lg text-on-surface">Reviews</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <p className="font-body-lg text-xl md:text-[24px] leading-relaxed text-on-surface italic hover-premium-glow hover-premium-text-glow cursor-default">"The staff is very good specially their behaviour and safder bhai is very competent and do their work with dedication"</p>
-              <div className="flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-on-tertiary-container"></span>
-                <p className="font-label-caps text-label-caps text-on-tertiary-container uppercase tracking-widest">Qasim Masood</p>
-              </div>
+        {/* SERVICES */}
+        <section className="py-section-padding relative overflow-hidden reveal" id="services">
+          <div className="watermark-text top-0 left-0">KAAM</div>
+          <div className="max-w-7xl mx-auto px-gutter relative z-10">
+            <div className="mb-stack-lg">
+              <span className="font-label-caps text-primary mb-2 block">THE MENU</span>
+              <h2 className="font-headline-xl uppercase">Services</h2>
             </div>
-            <div className="space-y-6 md:border-l md:border-tertiary/10 md:pl-12 mt-12 md:mt-0">
-              <p className="font-body-lg text-xl md:text-[24px] leading-relaxed text-on-surface italic hover-premium-glow hover-premium-text-glow cursor-default">"I had an amazing experience with global's staff and there service as well. Hygienic and friendly environment awesome service!"</p>
-              <div className="flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-on-tertiary-container"></span>
-                <p className="font-label-caps text-label-caps text-on-tertiary-container uppercase tracking-widest">Sajjad Ullah</p>
-              </div>
+            <div className="space-y-0">
+              {services.map((service, idx) => (
+                <div key={service.id} className="group flex flex-col md:flex-row justify-between items-center py-10 border-b border-primary/10 transition-all duration-500 hover:-translate-x-4 cursor-default service-row-hidden">
+                  <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12 w-full md:w-auto">
+                    <span className="font-label-caps text-primary/40">0{idx + 1}</span>
+                    <h3 className="font-display-lg text-[40px] md:text-[64px] uppercase group-hover:text-primary transition-colors">{service.serviceName}</h3>
+                    <span className="font-label-caps text-[10px] text-on-surface-variant/60 tracking-[0.3em]">{service.durationMinutes} MINS</span>
+                  </div>
+                  <div className="flex items-center gap-12 w-full md:w-auto mt-6 md:mt-0">
+                    <span className="font-label-caps text-body-lg text-primary">PKR {service.price}</span>
+                    <button onClick={() => handleBookService(service)} className="bg-primary text-background px-8 py-3 font-label-caps text-[10px] tracking-widest hover:bg-white transition-colors">BOOK</button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Section 5: BOOKING ENGINE */}
-        <section id="booking" className="py-20 md:py-32 px-6 md:px-20 lg:px-40 bg-surface-container-lowest relative">
-          <div className="max-w-7xl mx-auto">
+        {/* TESTIMONIALS */}
+        <section className="bg-[#161009] py-section-padding px-gutter border-t border-primary/10">
+          <div className="max-w-7xl mx-auto mb-stack-lg">
+            <span className="font-label-caps text-primary mb-2 block">TESTIMONIALS</span>
+            <h2 className="font-headline-xl uppercase">Reviews</h2>
+          </div>
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
+            <div className="relative">
+              <span className="font-label-caps text-[64px] text-primary/10 absolute -top-8 -left-4">“</span>
+              <blockquote className="font-body-lg text-[32px] italic leading-tight text-on-surface mb-8">
+                The attention to detail at GL◆BAL is unmatched in the city. It’s not just a haircut; it’s a quiet hour of pure craftsmanship in an environment that commands respect.
+              </blockquote>
+              <cite className="font-label-caps text-primary not-italic tracking-widest">— AHMED KHAN</cite>
+            </div>
+            <div className="relative">
+              <span className="font-label-caps text-[64px] text-primary/10 absolute -top-8 -left-4">“</span>
+              <blockquote className="font-body-lg text-[32px] italic leading-tight text-on-surface mb-8">
+                The aesthetic alone is worth the visit. But the precision of the skin fade and the traditional hot towel service is what keeps me coming back every two weeks.
+              </blockquote>
+              <cite className="font-label-caps text-primary not-italic tracking-widest">— ZAIN MALIK</cite>
+            </div>
+          </div>
+        </section>
+
+        {/* LOCATION */}
+        <section className="py-section-padding px-gutter max-w-7xl mx-auto reveal" id="location">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-stack-lg items-center">
+            <div className="space-y-12">
+              <div>
+                <span className="font-label-caps text-primary mb-2 block">FIND US</span>
+                <h2 className="font-headline-xl text-[48px] uppercase">Visit The House</h2>
+              </div>
+              <div className="space-y-8">
+                <div className="flex items-center gap-6">
+                  <span className="material-symbols-outlined text-primary">location_on</span>
+                  <div className="font-body-md">
+                    <span className="font-label-caps text-[10px] text-primary/60 block mb-1">ADDRESS</span>
+                    Street 102, I-8/4, Islamabad, Pakistan
+                  </div>
+                </div>
+                <div className="flex items-center gap-6">
+                  <span className="material-symbols-outlined text-primary">call</span>
+                  <div className="font-body-md">
+                    <span className="font-label-caps text-[10px] text-primary/60 block mb-1">CONTACT</span>
+                    <a href="tel:+923000000000" className="text-primary hover:underline">{/* TODO: replace with real number */}+92 300 000 0000</a>
+                  </div>
+                </div>
+                <div className="flex items-center gap-6">
+                  <span className="material-symbols-outlined text-primary">schedule</span>
+                  <div className="font-body-md">
+                    <span className="font-label-caps text-[10px] text-primary/60 block mb-1">HOURS</span>
+                    Mon – Sat · 9:00 AM – 10:00 PM<br />
+                    Sunday · 10:00 AM – 8:00 PM
+                  </div>
+                </div>
+              </div>
+              <a href="https://maps.app.goo.gl/VbVcrJQ132Wo4tNg8?g_st=ic" target="_blank" rel="noopener noreferrer" className="border border-primary px-10 py-4 font-label-caps text-[12px] tracking-widest hover:bg-primary hover:text-background transition-all flex items-center gap-4 w-fit text-primary">
+                GET DIRECTIONS <span className="material-symbols-outlined text-[16px]">north_east</span>
+              </a>
+              <div className="grid grid-cols-2 gap-4 pt-12">
+                <div className="h-48 bg-[#1C1510] border border-primary/10 overflow-hidden relative group">
+                  <span className="absolute top-2 left-2 z-10 font-label-caps text-[8px] bg-background/80 px-2 py-1 text-primary">EXTERIOR VIEW</span>
+                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Exterior" src="/images/exterior2.png" />
+                </div>
+                <div className="h-48 bg-[#1C1510] border border-primary/10 overflow-hidden relative group">
+                  <span className="absolute top-2 left-2 z-10 font-label-caps text-[8px] bg-background/80 px-2 py-1 text-primary">EXTERIOR VIEW</span>
+                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Exterior" src="/images/exterior3.png" />
+                </div>
+              </div>
+            </div>
+            <div className="h-[600px] w-full border border-primary/20">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.8!2d73.0762167!3d33.6637666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df950077957027%3A0x391a53670c781726!2sGLOBAL%20Hair%20Saloon!5e0!3m2!1sen!2spk!4v1"
+                width="100%" height="100%" style={{ border: 0 }}
+                allowFullScreen loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* BOOKING */}
+        <section id="booking" className="py-section-padding px-gutter bg-[#0D0B09] border-t border-primary/20">
+          <div className="max-w-7xl mx-auto border border-primary/20 p-12 relative">
             {bookingSuccess ? (
-              <div className="border border-on-tertiary-container p-12 text-center max-w-2xl mx-auto copper-etch bg-surface">
-                <h3 className="font-display-lg text-4xl text-on-surface mb-4 hover-premium-glow hover-premium-text-glow">Booking Confirmed!</h3>
+              <div className="text-center py-20">
+                <h3 className="font-display-lg text-4xl text-primary mb-4">Booking Confirmed!</h3>
                 <p className="font-body-md text-on-surface-variant">See you soon at GLOBAL Hair Saloon. We await your arrival.</p>
               </div>
             ) : (
               <form onSubmit={submitBooking} className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 <div className="lg:col-span-4">
-                  <h2 className="font-headline-lg text-4xl md:text-headline-lg text-on-surface mb-6 hover-premium-glow hover-premium-text-glow cursor-default">Claim Your Slot</h2>
-                  <p className="font-body-md text-on-surface-variant mb-12 lg:pr-10">
-                    Select a time that suits your narrative. We prioritize quality over quantity, ensuring every slot is a dedicated experience.
-                  </p>
-                  
+                  <h2 className="font-headline-xl uppercase text-[48px] mb-2">Claim Your Slot</h2>
+                  <p className="font-label-caps text-[10px] tracking-[0.4em] text-primary/60 uppercase mb-12">Available timings</p>
                   <div className="space-y-8 mb-12">
                     <div>
-                      <label className="font-label-caps text-label-caps text-on-tertiary-container block mb-2">SERVICE</label>
-                      <select 
-                        required
-                        className="w-full bg-surface border border-tertiary/30 p-4 text-on-surface font-body-md outline-none focus:border-on-tertiary-container transition-colors appearance-none cursor-pointer"
-                        value={selectedService?.id || ""}
-                        onChange={(e) => {
-                          const s = services.find(s => s.id === parseInt(e.target.value));
-                          setSelectedService(s || null);
-                        }}
-                      >
+                      <label className="font-label-caps text-primary block mb-2">SERVICE</label>
+                      <select required className="w-full bg-[#1A140C] border border-primary/30 p-4 font-body-md outline-none focus:border-primary transition-colors appearance-none cursor-pointer" value={selectedService?.id || ""} onChange={(e) => setSelectedService(services.find((s) => s.id === parseInt(e.target.value)) || null)}>
                         <option value="" disabled>-- Select a Service --</option>
-                        {services.map(s => <option key={s.id} value={s.id}>{s.serviceName} ({s.durationMinutes}m)</option>)}
+                        {services.map((s) => <option key={s.id} value={s.id}>{s.serviceName} ({s.durationMinutes}m)</option>)}
                       </select>
                     </div>
-
                     <div>
-                      <label className="font-label-caps text-label-caps text-on-tertiary-container block mb-2">DATE</label>
-                      <input 
-                        type="date" 
-                        required
-                        disabled={!selectedService}
-                        min={new Date().toISOString().split("T")[0]}
-                        max={(() => {
-                          const d = new Date();
-                          d.setDate(d.getDate() + 7);
-                          return d.toISOString().split("T")[0];
-                        })()}
-                        value={selectedDate}
-                        onChange={(e) => setSelectedDate(e.target.value)}
-                        className="w-full bg-surface border border-tertiary/30 p-4 text-on-surface font-body-md outline-none focus:border-on-tertiary-container transition-colors disabled:opacity-50"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 text-on-tertiary-container hover-premium-glow hover-premium-text-glow">
-                      <span className="material-symbols-outlined">event</span>
-                      <span className="font-label-caps text-label-caps">{selectedDate ? new Date(selectedDate).toDateString().toUpperCase() : "SELECT DATE"}</span>
-                    </div>
-                    <div className="flex items-center gap-4 text-on-surface-variant hover-premium-glow hover-premium-text-glow">
-                      <span className="material-symbols-outlined">location_on</span>
-                      <span className="font-label-caps text-label-caps">I-8/4 ISLAMABAD</span>
+                      <label className="font-label-caps text-primary block mb-2">DATE</label>
+                      <input type="date" required disabled={!selectedService} min={new Date().toISOString().split("T")[0]} max={(() => { const d = new Date(); d.setDate(d.getDate() + 7); return d.toISOString().split("T")[0]; })()} value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="w-full bg-[#1A140C] border border-primary/30 p-4 font-body-md outline-none focus:border-primary transition-colors disabled:opacity-50 [color-scheme:dark]" />
                     </div>
                   </div>
                 </div>
-
                 <div className="lg:col-span-8">
                   {!selectedService || !selectedDate ? (
-                    <div className="flex items-center justify-center h-full min-h-[300px] border border-dashed border-tertiary/30 text-on-surface-variant font-label-caps">
-                      CHOOSE SERVICE & DATE TO VIEW SLOTS
-                    </div>
+                    <div className="flex items-center justify-center h-full min-h-[300px] border border-dashed border-primary/30 font-label-caps text-primary/50">CHOOSE SERVICE & DATE</div>
                   ) : loadingSlots ? (
-                    <div className="flex items-center justify-center h-full min-h-[300px] border border-tertiary/30 text-on-tertiary-container font-label-caps animate-pulse">
-                      FINDING AVAILABILITY...
-                    </div>
+                    <div className="flex items-center justify-center h-full min-h-[300px] font-label-caps text-primary animate-pulse">FINDING AVAILABILITY...</div>
                   ) : availableSlots.length === 0 ? (
-                    <div className="flex items-center justify-center h-full min-h-[300px] border border-error/50 bg-error/10 text-error font-label-caps">
-                      NO SLOTS AVAILABLE ON THIS DATE
-                    </div>
+                    <div className="flex items-center justify-center h-full min-h-[300px] bg-secondary/10 text-secondary font-label-caps">NO SLOTS AVAILABLE</div>
                   ) : (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {availableSlots.map((slot) => (
-                        <button
-                          key={slot.time}
-                          type="button"
-                          disabled={slot.booked}
-                          onClick={() => setSelectedTime(slot.time)}
-                          className={`copper-etch p-6 text-center transition-all group hover-premium-glow hover-premium-box-glow ${
-                            selectedTime === slot.time ? "bg-on-tertiary-container" : slot.booked ? "bg-surface-container-high opacity-50 cursor-not-allowed" : "bg-primary-container hover:bg-on-tertiary-container/20"
-                          }`}
-                        >
-                          <span className={`font-display-lg text-3xl block transition-colors ${selectedTime === slot.time ? "text-white" : slot.booked ? "text-on-surface-variant line-through" : "text-on-surface group-hover:text-tertiary"}`}>
-                            {slot.time}
-                          </span>
-                          <span className={`font-label-caps text-[10px] ${selectedTime === slot.time ? "text-white/70" : "text-on-surface-variant"}`}>
-                            {slot.booked ? "BOOKED" : selectedTime === slot.time ? "SELECTED" : "AVAILABLE"}
-                          </span>
+                        <button key={slot.time} type="button" disabled={slot.booked} onClick={() => setSelectedTime(slot.time)} className={`py-6 text-center transition-all border border-primary/20 group ${selectedTime === slot.time ? "bg-primary text-background" : slot.booked ? "bg-[#1A140C] opacity-50 cursor-not-allowed" : "hover:bg-primary hover:text-background"}`}>
+                          <span className={`font-label-caps block text-lg ${slot.booked ? "line-through" : ""}`}>{slot.time}</span>
                         </button>
                       ))}
                     </div>
                   )}
-
                   {selectedTime && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
                       <div>
-                        <label className="font-label-caps text-label-caps text-on-tertiary-container block mb-2">YOUR NAME</label>
-                        <input 
-                          type="text" 
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="John Doe"
-                          className="w-full bg-surface border border-tertiary/30 p-4 text-on-surface font-body-md outline-none focus:border-on-tertiary-container transition-colors"
-                        />
+                        <label className="font-label-caps text-primary block mb-2">YOUR NAME</label>
+                        <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="John Doe" className="w-full bg-[#1A140C] border border-primary/30 p-4 font-body-md outline-none focus:border-primary transition-colors" />
                       </div>
                       <div>
-                        <label className="font-label-caps text-label-caps text-on-tertiary-container block mb-2">YOUR PHONE</label>
-                        <input 
-                          type="tel" 
-                          required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="+92 3XX XXXXXXX"
-                          className="w-full bg-surface border border-tertiary/30 p-4 text-on-surface font-body-md outline-none focus:border-on-tertiary-container transition-colors"
-                        />
+                        <label className="font-label-caps text-primary block mb-2">YOUR PHONE</label>
+                        <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+92 3XX XXXXXXX" className="w-full bg-[#1A140C] border border-primary/30 p-4 font-body-md outline-none focus:border-primary transition-colors" />
                       </div>
                     </div>
                   )}
-
                   <div className="mt-12">
-                    <button 
-                      type="submit"
-                      disabled={!selectedTime}
-                      className="w-full bg-[#D3432B] text-[#F9F7F2] font-label-caps text-label-caps py-6 tracking-widest hover:brightness-110 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed hover-premium-glow hover-premium-box-glow"
-                    >
+                    <button type="submit" disabled={!selectedTime} className="w-full bg-secondary text-on-secondary font-label-caps py-6 tracking-widest hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                       {selectedTime ? `CONFIRM BOOKING FOR ${selectedTime}` : "SELECT A SLOT"}
                     </button>
                   </div>
@@ -386,25 +466,25 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer id="contact" className="w-full py-20 bg-surface-container-lowest border-t border-tertiary/10">
-        <div className="grid grid-cols-1 md:grid-cols-12 px-6 md:px-20 lg:px-40 gap-8 items-start max-w-[1440px] mx-auto">
-          <div className="md:col-span-4">
-            <div className="font-display-lg text-headline-md text-on-surface mb-4 hover-premium-glow hover-premium-text-glow">GLOBAL</div>
-            <p className="font-body-md text-body-md text-on-surface-variant max-w-xs">The craft of grooming as a storied tradition. Serving the discerning gentleman since 2024.</p>
+      {/* FOOTER */}
+      <footer id="contact" className="w-full px-gutter py-section-padding flex flex-col md:flex-row justify-between items-end gap-stack-lg border-t border-primary/20 bg-surface-container-lowest">
+        <div className="w-full md:w-auto">
+          <div className="font-display-lg text-on-surface tracking-tighter mb-8 text-[56px] tracking-[0.06em]">
+            GL<span className="text-primary">◆</span>BAL
           </div>
-          <div className="md:col-span-4 flex flex-col gap-4 pt-4">
-            <a className="text-on-surface-variant font-label-caps text-label-caps hover:text-tertiary transition-colors hover-premium-glow hover-premium-text-glow" href="#">Instagram</a>
-            <a className="text-on-surface-variant font-label-caps text-label-caps hover:text-tertiary transition-colors hover-premium-glow hover-premium-text-glow" href="#">Privacy</a>
-            <a className="text-on-surface-variant font-label-caps text-label-caps hover:text-tertiary transition-colors hover-premium-glow hover-premium-text-glow" href="#">Terms</a>
+          <div className="space-y-2">
+            <p className="font-label-caps text-on-surface-variant">HUNAR · ISLAMABAD</p>
           </div>
-          <div className="md:col-span-4 md:text-right pt-4">
-            <p className="font-label-caps text-label-caps text-on-surface-variant hover-premium-glow hover-premium-text-glow">© 2024 GLOBAL HAIR SALOON. ISLAMABAD.</p>
-            <div className="mt-8 flex md:justify-end gap-6 items-center">
-              <div onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="w-10 h-10 border border-tertiary/20 flex items-center justify-center hover:border-tertiary transition-all cursor-pointer hover-premium-glow hover-premium-box-glow">
-                <span className="material-symbols-outlined text-[18px]">north</span>
-              </div>
-            </div>
+        </div>
+        <div className="flex flex-col items-end gap-8 w-full md:w-auto">
+          <nav className="flex gap-12 items-center">
+            <a href="/admin" className="text-on-surface-variant/20 hover:text-on-surface-variant font-label-caps text-[8px] transition-colors">ADMIN</a>
+          </nav>
+          <div className="font-label-caps text-[10px] text-on-surface-variant/40 tracking-[0.2em] flex items-center gap-8">
+            © 2024 GLOBAL HAIR SALOON. ISLAMABAD.
+            <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="w-8 h-8 border border-primary/40 text-primary flex items-center justify-center hover:bg-primary hover:text-background transition-all">
+              <span className="material-symbols-outlined text-[16px]">north</span>
+            </button>
           </div>
         </div>
       </footer>

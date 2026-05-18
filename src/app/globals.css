@@ -4,37 +4,148 @@
 
 @layer base {
   body {
-    background-color: theme('colors.background');
-    color: theme('colors.on-background');
+    background-color: #0D0B09;
+    color: #E8E0D4;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #B8934A;
+    color: #0D0B09;
   }
 }
 
 @layer utilities {
-  .copper-etch {
-    border: 1px solid rgba(184, 115, 51, 0.2);
+  /* ── Hero word stagger animation ── */
+  .hero-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px) skewY(3deg);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .text-shadow-sm {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-  .editorial-overhang {
-    margin-right: -80px;
-  }
-  
-  /* Premium Hover Effect */
-  .hover-premium-glow {
-    transition: transform 500ms ease-in-out, text-shadow 500ms ease-in-out, box-shadow 500ms ease-in-out;
-  }
-  .hover-premium-glow:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Specifically for text */
-  .hover-premium-text-glow:hover {
-    text-shadow: 0 0 12px rgba(255, 255, 255, 0.4), 0 0 20px rgba(184, 115, 51, 0.2);
+  .hero-word.visible {
+    opacity: 1;
+    transform: translateY(0) skewY(0deg);
   }
 
-  /* Specifically for buttons/containers */
-  .hover-premium-box-glow:hover {
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), 0 0 30px rgba(184, 115, 51, 0.15);
+  /* ── Hero subtitle slide-in ── */
+  .hero-sub-line {
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  }
+  .hero-sub-line.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Scroll reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Copper gradient divider ── */
+  .copper-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      #b8934a 50%,
+      transparent 100%
+    );
+    width: 100%;
+  }
+
+  /* ── Left-edge gradient mask ── */
+  .mask-fade-left {
+    mask-image: linear-gradient(to right, transparent, black 20%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
+  }
+
+  /* ── Large watermark text ── */
+  .watermark-text {
+    position: absolute;
+    font-size: 25vw;
+    line-height: 1;
+    color: rgba(184, 147, 74, 0.03);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── Film grain overlay ── */
+  .film-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.08;
+  }
+
+  /* ── Custom cursor ── */
+  #custom-cursor {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #b8934a;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+  }
+  #custom-cursor-ring {
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #b8934a;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s;
+  }
+
+  /* ── Service row stagger ── */
+  .service-row-hidden {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .service-row-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Infinite Background Zoom ── */
+  @keyframes slowZoom {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.15); }
+  }
+  .animate-slow-zoom {
+    animation: slowZoom 30s alternate linear infinite;
+  }
+
+  /* ── Marquee Animation ── */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    display: flex;
+    width: 200%;
+    animation: marquee 25s linear infinite;
   }
 }

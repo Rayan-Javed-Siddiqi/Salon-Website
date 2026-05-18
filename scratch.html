@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Poppins:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#e9c176",
+                    "on-secondary-fixed": "#1a1c19",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "secondary-fixed": "#e3e3de",
+                    "inverse-primary": "#5f5e5e",
+                    "secondary-container": "#484a46",
+                    "outline-variant": "#444748",
+                    "surface-dim": "#131313",
+                    "on-error": "#690005",
+                    "tertiary-container": "#190f00",
+                    "on-surface": "#e5e2e1",
+                    "background": "#131313",
+                    "error-container": "#93000a",
+                    "on-tertiary-fixed": "#261900",
+                    "surface-bright": "#393939",
+                    "surface": "#131313",
+                    "on-background": "#e5e2e1",
+                    "on-tertiary-fixed-variant": "#5d4201",
+                    "outline": "#8e9192",
+                    "primary-container": "#111111",
+                    "error": "#ffb4ab",
+                    "surface-container-high": "#2a2a2a",
+                    "on-secondary-container": "#b8b9b4",
+                    "on-primary-fixed": "#1c1b1b",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-primary": "#313030",
+                    "primary": "#c8c6c5",
+                    "on-secondary": "#2f312e",
+                    "secondary-fixed-dim": "#c6c7c2",
+                    "secondary": "#c6c7c2",
+                    "surface-container-low": "#1c1b1b",
+                    "on-tertiary-container": "#997835",
+                    "on-primary-container": "#7e7c7c",
+                    "tertiary-fixed-dim": "#e9c176",
+                    "on-surface-variant": "#c4c7c7",
+                    "surface-variant": "#353535",
+                    "surface-tint": "#c8c6c5",
+                    "on-primary-fixed-variant": "#474646",
+                    "surface-container-highest": "#353535",
+                    "inverse-surface": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "primary-fixed": "#e5e2e1",
+                    "tertiary-fixed": "#ffdea5",
+                    "on-secondary-fixed-variant": "#454744",
+                    "on-tertiary": "#412d00",
+                    "surface-container": "#20201f",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "2rem",
+                    "safe-margin": "8vw",
+                    "element-gap": "1.5rem",
+                    "section-gap": "12rem"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Playfair Display"],
+                    "display-xl": ["Playfair Display"],
+                    "body-lg": ["Poppins"],
+                    "label-caps": ["Poppins"],
+                    "body-md": ["Poppins"],
+                    "headline-md": ["Playfair Display"],
+                    "display-xl-mobile": ["Playfair Display"]
+            },
+            "fontSize": {
+                    "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                    "display-xl": ["120px", {"lineHeight": "110px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                    "display-xl-mobile": ["64px", {"lineHeight": "68px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glow-gold-sm {
+            box-shadow: 0 0 15px 0px rgba(233, 193, 118, 0.2);
+        }
+        .glow-gold-hover:hover {
+            box-shadow: 0 0 25px 5px rgba(233, 193, 118, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-tertiary selection:text-background overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl flex justify-between items-center px-safe-margin py-6">
+<div class="font-headline-lg text-headline-lg tracking-widest text-on-surface uppercase">GLOBAL</div>
+<div class="hidden md:flex space-x-12 items-center">
+<a class="font-label-caps text-label-caps text-tertiary font-bold border-b border-tertiary pb-1 transition-all duration-500 ease-out" href="#">Journal</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:text-tertiary hover:scale-105 transition-all duration-500 ease-out" href="#">Services</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:text-tertiary hover:scale-105 transition-all duration-500 ease-out" href="#">Ateliers</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:text-tertiary hover:scale-105 transition-all duration-500 ease-out" href="#">Booking</a>
+</div>
+<button class="font-label-caps text-label-caps px-8 py-3 border border-tertiary text-tertiary hover:bg-tertiary hover:text-background hover:scale-105 transition-all duration-500 ease-out glow-gold-hover">
+            RESERVE
+        </button>
+</nav>
+<main>
+<!-- Section 1: Cinematic Hero -->
+<section class="relative min-h-screen flex items-center px-safe-margin pt-24 overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-40">
+<img class="w-full h-full object-cover" data-alt="A cinematic, high-contrast wide shot of a luxury vintage barber shop interior at night. The scene is illuminated by warm, localized pendant lighting that casts long, moody shadows across leather chairs and mahogany woodwork. The atmosphere is sophisticated and quiet, utilizing a palette of deep charcoals and muted gold accents. The visual style is reminiscent of high-end editorial noir photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFVD6V-grs02bwQpxMIfhCsPfAb7QEo8T6M534QVavYJ7lsdV1enVbu0yZifm4MQ7rRfgOHvHf8QkTNr9ODFpfogdGGvgUa8GVUvmxunZux2tAokmLSfBjbKCy69P5ROE2mEdm1DlvpbL7EITXRU-wRd3NCxJQuAiKzPBkb4Ffd_rSatY-T5ZnQ5qrPBizRC4mZMz2E4j6cuPMqO6UgTRXYhX6FoMHMxoneOzvInB9zEcBOucI4r6N5sX5DGKp8zF4qSrMGlUDRIs"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background"></div>
+</div>
+<div class="relative z-10 max-w-4xl">
+<h1 class="font-display-xl text-display-xl-mobile md:text-display-xl leading-tight mb-12 animate-fade-in">
+                    Sharp Cuts.<br/>Clean Looks.<br/>No Waiting.
+                </h1>
+<a class="inline-flex items-center group font-label-caps text-label-caps tracking-widest text-tertiary hover:scale-105 transition-all duration-500 ease-out" href="#booking">
+<span class="mr-4 border-b border-tertiary pb-1 group-hover:glow-gold-sm">BOOK APPOINTMENT</span>
+<span class="material-symbols-outlined transition-transform duration-500 group-hover:translate-x-4">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- Section 2: The Craft (Lookbook) -->
+<section class="py-section-gap px-safe-margin bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-12 mb-16">
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">The Portfolio</span>
+<h2 class="font-headline-lg text-headline-lg mt-4">The Craft</h2>
+</div>
+<!-- Portrait Large Left -->
+<div class="md:col-span-7 h-[819px] overflow-hidden relative group">
+<img class="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105" data-alt="A striking portrait of a man with a sharp, professional fade haircut and a meticulously groomed beard. The lighting is dramatic and directional, highlighting the clean lines of the cut against a deep, dark background. The image has an editorial, high-fashion aesthetic with rich textures and cinematic contrast. The overall mood is confident and sophisticated." src="https://lh3.googleusercontent.com/aida/ADBb0ugJ9kYqO89tUUCaNpNtluJy-iz29fyRUfT9V7FGT8ISaLiLR9bl7NvpWZOwCHHI07dwA6Yp4oQjQWs7HZEg43YqgOTy2NijVvCURK9H_oeAoiOnzoGZd0SAxy1Wn3SDeJ90HU07mZxkmcVPFHA8ktue1XEmaNhqEHUa6hH9VNIMURZnAWmsR0uE6bMgNYQUjEwixlYxIGTNJd0EuNuPvAS0y4EiX7dnoIIUwIlse8nN3ArXh1ej6rOPBye1xbua2Kzv5pv1ZYmlvA"/>
+<div class="absolute bottom-10 left-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+<p class="font-label-caps text-label-caps text-on-surface">Study / 01</p>
+</div>
+</div>
+<!-- Two Smaller Right (Stacked/Asymmetrical) -->
+<div class="md:col-span-5 flex flex-col gap-section-gap md:mt-32">
+<div class="h-[512px] overflow-hidden group relative">
+<img class="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105" data-alt="A close-up action shot of a master barber using a traditional straight razor to define the beard line of a client. The focus is sharp on the razor and the clean edge of the beard, with a soft blur on the surroundings. The lighting creates a warm, atmospheric glow, emphasizing the meticulous nature of the craft. The color palette is dominated by dark charcoals and warm amber tones." src="https://lh3.googleusercontent.com/aida/ADBb0uhKy4tL8j0DxS6Mw11mt88vCP3QBWVHS-7PLgp299-Z7o9-41eRMQCvHy8yUPSM-yowSh9NlpGTDoekK8V7HKHUaDgwLViATtrFb88qwY8j83qzGOQOWnqjt1cdyzYkc8buB3dHMa375cMSXu9XIrL0jwskEQ2w9QzV_BSonlDxWSI1X46qIdvt7iEV1dm4FhNLnYdQTSGmGFCiPE7k1HDCHcIy9Vn6U9QChc4JA8-0fccWQxph2jKXkWPAxrQwqqadjeoPMzVo-Q"/>
+<div class="absolute bottom-8 left-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+<p class="font-label-caps text-label-caps text-on-surface">Study / 02</p>
+</div>
+</div>
+<div class="h-[614px] md:-ml-24 overflow-hidden group relative">
+<img class="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105" data-alt="A cinematic, artistic shot of hair styling products and tools arranged on a dark marble surface. The lighting is low-key with subtle glows highlighting the high-end packaging and steel tools. The composition is asymmetrical and editorial, conveying a sense of luxury and curated excellence. The background is a rich, textured dark charcoal." src="https://lh3.googleusercontent.com/aida/ADBb0uhVHXYibebN2K8CieO7vdYSEO7rE5zSc3A5hR4x6V0A4uYKF9cP7V8Ix0iGQXc_kruJJZuClEUQi1oLy_OSB8bMsH-OLN55ut7xXE2fR1BoHmnZfHgBt1QxSMsfJkzjv8K6xdwZ6jsMXiPLDqOOcPjPg2EOMkpNWp7TzTr6DOPX49ah2EHZbcq9AWcRVXBYCAzmUwgdaCPBMI_zHQA1VZ5hL3GsFJUAaHcLVPn1JyOuCA980nQd2rEuRIMIDHnWfwF0ZBvKcXKM7g"/>
+<div class="absolute bottom-8 left-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+<p class="font-label-caps text-label-caps text-on-surface">Study / 03</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: The Reputation (Reviews) -->
+<section class="py-section-gap px-safe-margin bg-background">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter md:gap-32">
+<!-- Column 1 -->
+<div class="flex flex-col space-y-element-gap">
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">Testimonials</span>
+<div class="pt-12 border-t border-surface-variant">
+<div class="flex text-tertiary mb-6">
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+</div>
+<blockquote class="font-headline-md text-headline-md italic mb-8 leading-relaxed">
+                            "The staff is very good specially their behaviour and safder bhai is very competent a do their work with dedication"
+                        </blockquote>
+<p class="font-label-caps text-label-caps text-on-surface-variant">— QASIM MASOOD</p>
+</div>
+</div>
+<!-- Column 2 (Pushed Down) -->
+<div class="md:mt-32 flex flex-col space-y-element-gap">
+<div class="pt-12 border-t border-surface-variant">
+<div class="flex text-tertiary mb-6">
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+</div>
+<blockquote class="font-headline-md text-headline-md italic mb-8 leading-relaxed">
+                            "I had an amazing experience with global's staff and there service as well higenic and friendly environment awesome service..."
+                        </blockquote>
+<p class="font-label-caps text-label-caps text-on-surface-variant">— SAJJAD ULLAH</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: The Services -->
+<section class="py-section-gap px-safe-margin bg-surface-container-low">
+<div class="max-w-5xl mx-auto">
+<div class="text-center mb-24">
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">The Menu</span>
+<h2 class="font-display-xl text-display-xl-mobile md:text-headline-lg mt-4">Grooming Services</h2>
+</div>
+<div class="space-y-12">
+<!-- Haircut -->
+<div class="flex items-end justify-between group cursor-pointer transition-all duration-500 ease-out hover:scale-[1.02]">
+<div class="flex-grow border-b border-surface-variant pb-4 flex items-baseline">
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-tertiary transition-colors duration-500">Haircut</h3>
+<div class="mx-4 flex-grow border-b border-dotted border-on-surface-variant opacity-30"></div>
+<span class="font-headline-md text-headline-md text-on-surface">$45</span>
+</div>
+<a class="font-label-caps text-label-caps text-tertiary ml-8 pb-4 opacity-0 group-hover:opacity-100 group-hover:glow-gold-sm transition-all duration-500" href="#booking">BOOK</a>
+</div>
+<!-- Beard Trim -->
+<div class="flex items-end justify-between group cursor-pointer transition-all duration-500 ease-out hover:scale-[1.02]">
+<div class="flex-grow border-b border-surface-variant pb-4 flex items-baseline">
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-tertiary transition-colors duration-500">Beard Trim</h3>
+<div class="mx-4 flex-grow border-b border-dotted border-on-surface-variant opacity-30"></div>
+<span class="font-headline-md text-headline-md text-on-surface">$30</span>
+</div>
+<a class="font-label-caps text-label-caps text-tertiary ml-8 pb-4 opacity-0 group-hover:opacity-100 group-hover:glow-gold-sm transition-all duration-500" href="#booking">BOOK</a>
+</div>
+<!-- Haircut + Beard -->
+<div class="flex items-end justify-between group cursor-pointer transition-all duration-500 ease-out hover:scale-[1.02]">
+<div class="flex-grow border-b border-surface-variant pb-4 flex items-baseline">
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-tertiary transition-colors duration-500">Haircut + Beard</h3>
+<div class="mx-4 flex-grow border-b border-dotted border-on-surface-variant opacity-30"></div>
+<span class="font-headline-md text-headline-md text-on-surface">$70</span>
+</div>
+<a class="font-label-caps text-label-caps text-tertiary ml-8 pb-4 opacity-0 group-hover:opacity-100 group-hover:glow-gold-sm transition-all duration-500" href="#booking">BOOK</a>
+</div>
+<!-- Facial / Cleanup -->
+<div class="flex items-end justify-between group cursor-pointer transition-all duration-500 ease-out hover:scale-[1.02]">
+<div class="flex-grow border-b border-surface-variant pb-4 flex items-baseline">
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-tertiary transition-colors duration-500">Facial / Cleanup</h3>
+<div class="mx-4 flex-grow border-b border-dotted border-on-surface-variant opacity-30"></div>
+<span class="font-headline-md text-headline-md text-on-surface">$50</span>
+</div>
+<a class="font-label-caps text-label-caps text-tertiary ml-8 pb-4 opacity-0 group-hover:opacity-100 group-hover:glow-gold-sm transition-all duration-500" href="#booking">BOOK</a>
+</div>
+<!-- Hair Coloring -->
+<div class="flex items-end justify-between group cursor-pointer transition-all duration-500 ease-out hover:scale-[1.02]">
+<div class="flex-grow border-b border-surface-variant pb-4 flex items-baseline">
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-tertiary transition-colors duration-500">Hair Coloring</h3>
+<div class="mx-4 flex-grow border-b border-dotted border-on-surface-variant opacity-30"></div>
+<span class="font-headline-md text-headline-md text-on-surface">$95</span>
+</div>
+<a class="font-label-caps text-label-caps text-tertiary ml-8 pb-4 opacity-0 group-hover:opacity-100 group-hover:glow-gold-sm transition-all duration-500" href="#booking">BOOK</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: The Booking Engine -->
+<section class="py-section-gap px-safe-margin bg-background" id="booking">
+<div class="max-w-4xl mx-auto">
+<div class="mb-16">
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">Reservation</span>
+<h2 class="font-headline-lg text-headline-lg mt-4">Select Your Time</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Morning Slots -->
+<button class="py-6 px-4 bg-surface-container-high border border-transparent hover:border-tertiary transition-all duration-500 text-on-surface font-label-caps text-label-caps group hover:glow-gold-sm">
+<span class="block mb-1 group-hover:text-tertiary">09:00 AM</span>
+<span class="text-[10px] opacity-50">AVAILABLE</span>
+</button>
+<button class="py-6 px-4 bg-surface-container-high border border-transparent hover:border-tertiary transition-all duration-500 text-on-surface font-label-caps text-label-caps group hover:glow-gold-sm">
+<span class="block mb-1 group-hover:text-tertiary">10:00 AM</span>
+<span class="text-[10px] opacity-50">AVAILABLE</span>
+</button>
+<button class="py-6 px-4 bg-surface-container-high border border-transparent opacity-30 cursor-not-allowed text-on-surface font-label-caps text-label-caps">
+<span class="block mb-1">11:00 AM</span>
+<span class="text-[10px]">BOOKED</span>
+</button>
+<button class="py-6 px-4 bg-surface-container-high border border-transparent hover:border-tertiary transition-all duration-500 text-on-surface font-label-caps text-label-caps group hover:glow-gold-sm">
+<span class="block mb-1 group-hover:text-tertiary">12:00 PM</span>
+<span class="text-[10px] opacity-50">AVAILABLE</span>
+</button>
+<!-- Afternoon Slots -->
+<button class="py-6 px-4 bg-surface-container-high border border-transparent hover:border-tertiary transition-all duration-500 text-on-surface font-label-caps text-label-caps group hover:glow-gold-sm">
+<span class="block mb-1 group-hover:text-tertiary">02:00 PM</span>
+<span class="text-[10px] opacity-50">AVAILABLE</span>
+</button>
+<button class="py-6 px-4 bg-surface-container-high border border-transparent hover:border-tertiary transition-all duration-500 text-on-surface font-label-caps text-label-caps group hover:glow-gold-sm">
+<span class="block mb-1 group-hover:text-tertiary">03:00 PM</span>
+<span class="text-[10px] opacity-50">AVAILABLE</span>
+</button>
+<button class="py-6 px-4 bg-surface-container-high border border-tertiary text-tertiary font-label-caps text-label-caps glow-gold-sm">
+<span class="block mb-1">04:00 PM</span>
+<span class="text-[10px]">SELECTED</span>
+</button>
+<button class="py-6 px-4 bg-surface-container-high border border-transparent hover:border-tertiary transition-all duration-500 text-on-surface font-label-caps text-label-caps group hover:glow-gold-sm">
+<span class="block mb-1 group-hover:text-tertiary">05:00 PM</span>
+<span class="text-[10px] opacity-50">AVAILABLE</span>
+</button>
+</div>
+<div class="mt-16 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-surface-variant pt-12">
+<div>
+<p class="font-body-md text-on-surface-variant">Confirmed selection: <span class="text-tertiary font-bold">Oct 12th, 04:00 PM</span></p>
+</div>
+<button class="w-full md:w-auto font-label-caps text-label-caps px-16 py-5 bg-tertiary text-background hover:scale-105 transition-all duration-500 ease-out glow-gold-hover uppercase tracking-widest font-bold">
+                        Confirm Appointment
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap px-safe-margin bg-surface-container-lowest grid grid-cols-1 md:grid-cols-3 gap-element-gap items-start">
+<div class="flex flex-col space-y-6">
+<div class="font-headline-md text-headline-md text-tertiary tracking-tighter uppercase">GLOBAL</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs">Elevating masculine elegance through precision and the art of cinematic grooming.</p>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<div class="flex flex-col space-y-4">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:translate-x-1 transition-transform duration-500" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:translate-x-1 transition-transform duration-500" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col space-y-4">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:translate-x-1 transition-transform duration-500" href="#">Sustainability</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:translate-x-1 transition-transform duration-500" href="#">Islamabad Atelier</a>
+</div>
+</div>
+<div class="flex flex-col md:items-end space-y-4">
+<p class="font-label-caps text-label-caps text-on-surface-variant text-right">© 2024 GLOBAL Hair Saloon. Precision Guaranteed.</p>
+<div class="flex space-x-6 text-on-surface">
+<a class="hover:text-tertiary transition-colors duration-500" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="hover:text-tertiary transition-colors duration-500" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+</div>
+</div>
+</footer>
+</body></html>

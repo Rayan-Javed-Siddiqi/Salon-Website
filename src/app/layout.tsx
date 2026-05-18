@@ -1,21 +1,28 @@
 import type { Metadata } from "next";
-import { Abril_Fatface, Hanken_Grotesk } from "next/font/google";
+import { Bebas_Neue, EB_Garamond, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const abril = Abril_Fatface({
+const bebas = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
-  variable: "--font-abril",
+  variable: "--font-bebas",
 });
 
-const hanken = Hanken_Grotesk({
+const garamond = EB_Garamond({
   subsets: ["latin"],
-  variable: "--font-hanken",
+  variable: "--font-garamond",
+});
+
+const spaceMono = Space_Mono({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-space",
 });
 
 export const metadata: Metadata = {
-  title: "GLOBAL Hair Saloon",
-  description: "The craft of grooming as a storied tradition. Serving the discerning gentleman since 2024.",
+  title: "GL◆BAL Hair Saloon | Islamabad",
+  description:
+    "Ek baar aayen, baar baar aayen. Premium grooming & timeless tradition since 2024 — I-8/4 Islamabad.",
 };
 
 export default function RootLayout({
@@ -26,9 +33,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className={`${abril.variable} ${hanken.variable} antialiased`}>
+      <body
+        className={`${bebas.variable} ${garamond.variable} ${spaceMono.variable} antialiased`}
+      >
         {children}
       </body>
     </html>
