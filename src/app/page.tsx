@@ -32,7 +32,7 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/services")
       .then((res) => res.json())
-      .then((data) => setServices(data))
+      .then((data) => setServices(Array.isArray(data) ? data : []))
       .catch((err) => console.error(err));
   }, []);
 
